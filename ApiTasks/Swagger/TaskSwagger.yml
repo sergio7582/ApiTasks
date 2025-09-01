@@ -1,0 +1,260 @@
+﻿openapi: 3.0.1
+info:
+  title: ApiTasks
+  version: '1.0'
+paths:
+  /api/Access/CheckIn:
+    post:
+      tags:
+        - Access
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UsuarioDTO'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/UsuarioDTO'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/UsuarioDTO'
+      responses:
+        '200':
+          description: OK
+  /api/Access/Login:
+    post:
+      tags:
+        - Access
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginDto'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/LoginDto'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/LoginDto'
+      responses:
+        '200':
+          description: OK
+  /api/Tasks/create:
+    post:
+      tags:
+        - Tasks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskDto'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/TaskDto'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/TaskDto'
+      responses:
+        '200':
+          description: OK
+  /api/Tasks/complete:
+    put:
+      tags:
+        - Tasks
+      parameters:
+        - name: IdTask
+          in: query
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+  /api/Tasks/gettasksbycaetgory:
+    get:
+      tags:
+        - Tasks
+      parameters:
+        - name: IdCategory
+          in: query
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+  /api/Tasks/update:
+    put:
+      tags:
+        - Tasks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskDto'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/TaskDto'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/TaskDto'
+      responses:
+        '200':
+          description: OK
+  /api/Tasks/getTasks:
+    get:
+      tags:
+        - Tasks
+      responses:
+        '200':
+          description: OK
+  /api/Tasks/createCategory:
+    post:
+      tags:
+        - Tasks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryDto'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/CategoryDto'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/CategoryDto'
+      responses:
+        '200':
+          description: OK
+  /api/Tasks/getCategorys:
+    get:
+      tags:
+        - Tasks
+      responses:
+        '200':
+          description: OK
+  /api/Tasks/updateCategory:
+    put:
+      tags:
+        - Tasks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryDto'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/CategoryDto'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/CategoryDto'
+      responses:
+        '200':
+          description: OK
+  /api/Tasks/getcategorybyid:
+    get:
+      tags:
+        - Tasks
+      parameters:
+        - name: IdCategory
+          in: query
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+components:
+  schemas:
+    CategoryDto:
+      required:
+        - title
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        title:
+          maxLength: 100
+          minLength: 3
+          type: string
+          nullable: true
+        icon:
+          type: string
+          nullable: true
+      additionalProperties: false
+    LoginDto:
+      required:
+        - password
+        - username
+      type: object
+      properties:
+        username:
+          minLength: 1
+          type: string
+        password:
+          minLength: 1
+          type: string
+      additionalProperties: false
+    TaskDto:
+      required:
+        - dateLimit
+        - description
+        - idCategory
+        - title
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        title:
+          maxLength: 100
+          minLength: 1
+          type: string
+          nullable: true
+        description:
+          maxLength: 200
+          minLength: 5
+          type: string
+          nullable: true
+        idCategory:
+          type: integer
+          format: int32
+        dateLimit:
+          type: string
+          format: date-time
+      additionalProperties: false
+    UsuarioDTO:
+      required:
+        - email
+        - lastname
+        - name
+        - password
+        - username
+      type: object
+      properties:
+        username:
+          maxLength: 20
+          minLength: 5
+          type: string
+          nullable: true
+        name:
+          maxLength: 100
+          minLength: 5
+          type: string
+          nullable: true
+        lastname:
+          maxLength: 100
+          minLength: 5
+          type: string
+          nullable: true
+        email:
+          maxLength: 50
+          minLength: 5
+          type: string
+          nullable: true
+        password:
+          minLength: 8
+          type: string
+          nullable: true
+      additionalProperties: false
